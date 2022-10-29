@@ -11,7 +11,7 @@ jobs:
       - name: Say Hello! to dev people
         run: |
           echo "Hey dev team, this is Flor"
-  ping-pong:
+  connect-with-automation-repo:
     runs-on: ubuntu-latest
     steps:
       - name: PING - Dispatch the workflow for dash-automation
