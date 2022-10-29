@@ -1,0 +1,37 @@
+name: Dash Main (remote initiator)
+
+on:
+  push:
+  repository_dispatch:
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello! to dev people
+        run: |
+          echo "Hey dev team, this is Flor"
+  ping-pong:
+    runs-on: ubuntu-latest
+    steps:
+      - name: PING - Dispatch the workflow for 'dash-automation'
+        if: github.event.action != 'pong'
+        run: |
+          curl -X POST https://api.github.com/repos/floreacosta/dash-automation/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "ping", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+      - name: ACK - Acknowledge pong from remote repository - initiated by 'dash-automation'
+        if: github.event.action == 'pong'
+        run: |
+          echo "PONG received from '${{ github.event.client_payload.repository }}'" && \
+          curl -X POST https://api.github.com/repos/floreacosta/dash-automation/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "ack", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}
+  say-goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Goodbye! to dev people
+        run: |
+          echo "Hey dev team, I'm out"
