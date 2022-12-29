@@ -3,9 +3,15 @@ name: Dash Main (remote initiator)
 on:
   push:
   repository_dispatch:
-    types: ['start e2e', 'end e2e']
 
 jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        run: |
+          echo "Hello world!!"
+
   e2e:
     runs-on: ubuntu-latest
     steps:
