@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Say hello
+        if: github.event.event_type != 'end e2e'
         run: |
           echo "Hello world!!"
 
@@ -16,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start E2E
+        if: github.event.event_type != 'end e2e'
         run: |
           curl -X POST https://api.github.com/repos/floreacosta/dash-automation/dispatches \
           -H "Accept: application/vnd.github+json" \
@@ -24,7 +26,7 @@ jobs:
 
   say-goodbye-passed:
     runs-on: ubuntu-latest
-    if: github.event.client_payload.passed == true
+    if: github.event.event_type == 'end e2e' && github.event.client_payload.passed == true
     steps:
       - name: E2E passed
         run: |
@@ -32,7 +34,7 @@ jobs:
 
   say-goodbye-failed:
     runs-on: ubuntu-latest
-    if: github.event.client_payload.passed == false
+    if: github.event.event_type == 'end e2e' && github.event.client_payload.passed == false
     steps:
       - name: E2E failed
         run: |
