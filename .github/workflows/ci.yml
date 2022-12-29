@@ -24,3 +24,9 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -u ${{ secrets.ACCESS_TOKEN }} \
           -d '{"event_type": "ack", "client_payload": { "repository": "${{ github.repository }}" }}'
+  say-goodbay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Should not run
+      run: |
+        yarn say:goodbye
