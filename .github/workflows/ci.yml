@@ -27,6 +27,7 @@ jobs:
 
   say-goodbay:
     runs-on: ubuntu-latest
+    needs: ['e2e']
     steps:
       - name: Should not run
         run: |
