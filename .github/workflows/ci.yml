@@ -28,5 +28,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Should not run
-      run: |
-        yarn say:goodbye
+        run: |
+          yarn say:goodbye
